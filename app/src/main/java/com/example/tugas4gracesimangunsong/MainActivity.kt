@@ -1,5 +1,6 @@
 package com.example.tugas4gracesimangunsong
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var wisataRecyclerView: RecyclerView
+    private lateinit var wisataAdapter: ImageAdapter
+    private var wisataList = ArrayList<WisataData>()
+
     private lateinit var pahlawanRecyclerView: RecyclerView
     private lateinit var pahlawanAdapter: MyAdapter
     private var listPahlawan = ArrayList<ItemData>()
@@ -19,6 +24,17 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        setupPahlawanList()
+        setupWisataList()
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun setupPahlawanList() {
         pahlawanRecyclerView = findViewById(R.id.pahlawanRV)
         pahlawanRecyclerView.layoutManager = LinearLayoutManager(this)
         pahlawanRecyclerView.setHasFixedSize(true)
@@ -36,11 +52,47 @@ class MainActivity : AppCompatActivity() {
 
         pahlawanAdapter = MyAdapter(listPahlawan)
         pahlawanRecyclerView.adapter = pahlawanAdapter
+    }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+    private fun setupWisataList() {
+        wisataRecyclerView = findViewById(R.id.imageRecyleView)
+        wisataRecyclerView.layoutManager = LinearLayoutManager(this)
+        wisataRecyclerView.setHasFixedSize(true)
+
+        wisataList.add(
+            WisataData(
+                R.drawable.danaulovee, "Danau Love",
+                "Danau Love Sentani, atau dikenal juga sebagai Danau Imfote, adalah sebuah destinasi wisata alam yang menawan di Distrik Sentani Timur, Kabupaten Jayapura, Papua. Danau ini terkenal karena bentuknya yang menyerupai simbol hati jika dilihat dari ketinggian."
+            )
+        )
+        wisataList.add(
+            WisataData(
+                R.drawable.baseg, "Base-G",
+                "Pantai Base-G membentang hampir 3 km dengan pasir putih lembut dan air laut berwarna biru jernih. Dikelilingi oleh pepohonan rindang, pantai ini cocok untuk bersantai, berenang, atau berjemur."
+            )
+        )
+        wisataList.add(
+            WisataData(
+                R.drawable.bukitjokowii, "Bukit Jokowi",
+                "Dari puncak bukit, pengunjung disuguhi panorama Teluk Youtefa yang memukau. Cocok untuk fotografi dan relaksasi, terutama saat matahari terbit atau terbenam."
+            )
+        )
+        wisataList.add(
+            WisataData(
+                R.drawable.bukitjayapuracity, "Bukit Jayapura City",
+                "Dari puncak Bukit Jayapura City, pengunjung dapat menikmati panorama 360 derajat kota dan laut. Pemandangan siang dan malam hari sangat menakjubkan."
+            )
+        )
+
+        wisataAdapter = ImageAdapter(wisataList)
+        wisataRecyclerView.adapter = wisataAdapter
+
+        wisataAdapter.onItemClick = { item ->
+            val intent = Intent(this, DetailActivity::class.java).apply {
+                putExtra("wisata", item)
+            }
+            startActivity(intent)
         }
     }
 }
+
