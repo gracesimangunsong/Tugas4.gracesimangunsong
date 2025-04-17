@@ -1,5 +1,6 @@
 package com.example.tugas4gracesimangunsong
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
@@ -13,8 +14,7 @@ data class Image (val imageSource:Int, val imageTitle: String, val imageDesc:Str
         parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(imageSource)
@@ -38,6 +38,7 @@ data class Image (val imageSource:Int, val imageTitle: String, val imageDesc:Str
 }
 
 class itemimage : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

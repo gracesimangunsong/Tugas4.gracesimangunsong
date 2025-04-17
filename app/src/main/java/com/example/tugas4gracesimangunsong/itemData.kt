@@ -1,9 +1,14 @@
 package com.example.tugas4gracesimangunsong
 
-data class ItemData(
-    val gambar: Int,
-    val nama: String,
-    val asal: String )
+data class WisataData(
+    val imageRes: Int,
+    val name: String,
+    val description: String
+)
+
+
+
+
 
 
 

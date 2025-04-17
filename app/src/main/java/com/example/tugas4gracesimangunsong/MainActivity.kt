@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupPahlawanList() {
-        pahlawanRecyclerView = findViewById(R.id.pahlawanRV)
+        pahlawanRecyclerView = findViewById(R.id.pahlawanRv)
         pahlawanRecyclerView.layoutManager = LinearLayoutManager(this)
         pahlawanRecyclerView.setHasFixedSize(true)
 
@@ -62,37 +63,36 @@ class MainActivity : AppCompatActivity() {
         wisataList.add(
             WisataData(
                 R.drawable.danaulovee, "Danau Love",
-                "Danau Love Sentani, atau dikenal juga sebagai Danau Imfote, adalah sebuah destinasi wisata alam yang menawan di Distrik Sentani Timur, Kabupaten Jayapura, Papua. Danau ini terkenal karena bentuknya yang menyerupai simbol hati jika dilihat dari ketinggian."
+                "Danau Love Sentani, atau dikenal juga sebagai Danau Imfote, adalah sebuah destinasi wisata alam yang menawan di Distrik Sentani Timur, Kabupaten Jayapura, Papua. Danau ini terkenal karena bentuknya yang menyerupai simbol hati jika dilihat dari ketinggian. Bentuk unik ini membuatnya sangat populer di kalangan wisatawan lokal maupun mancanegara. Di sekitar danau terdapat perbukitan hijau yang menambah keindahan pemandangan. Tempat ini sering dijadikan lokasi untuk foto prewedding dan aktivitas fotografi lainnya."
             )
         )
         wisataList.add(
             WisataData(
                 R.drawable.baseg, "Base-G",
-                "Pantai Base-G membentang hampir 3 km dengan pasir putih lembut dan air laut berwarna biru jernih. Dikelilingi oleh pepohonan rindang, pantai ini cocok untuk bersantai, berenang, atau berjemur."
+                "Pantai Base-G membentang hampir 3 km dengan pasir putih lembut dan air laut berwarna biru jernih. Pantai ini merupakan salah satu tempat favorit untuk bersantai, berenang, dan menikmati matahari terbenam. Letaknya yang tidak jauh dari pusat Kota Jayapura membuatnya mudah diakses. Selain itu, pengunjung juga bisa menikmati berbagai makanan khas Papua yang dijajakan oleh pedagang lokal di sekitar pantai."
             )
         )
         wisataList.add(
             WisataData(
-                R.drawable.bukitjokowii, "Bukit Jokowi",
-                "Dari puncak bukit, pengunjung disuguhi panorama Teluk Youtefa yang memukau. Cocok untuk fotografi dan relaksasi, terutama saat matahari terbit atau terbenam."
+                R.drawable.bukitjokowi, "Bukit Jokowi",
+                "Dari puncak bukit, pengunjung disuguhi panorama Teluk Youtefa yang memukau serta hamparan laut biru yang luas. Bukit ini dinamakan ‘Bukit Jokowi’ sebagai bentuk penghargaan atas kunjungan Presiden Joko Widodo ke tempat tersebut. Jalan menuju bukit cukup menantang, namun keindahan alam yang disajikan di puncaknya sangat sepadan dengan usaha yang dikeluarkan."
             )
         )
         wisataList.add(
             WisataData(
                 R.drawable.bukitjayapuracity, "Bukit Jayapura City",
-                "Dari puncak Bukit Jayapura City, pengunjung dapat menikmati panorama 360 derajat kota dan laut. Pemandangan siang dan malam hari sangat menakjubkan."
+                "Dari puncak Bukit Jayapura City, pengunjung dapat menikmati panorama 360 derajat kota dan laut yang indah. Bukit ini menjadi tempat favorit untuk melihat matahari terbenam dan suasana kota Jayapura di malam hari. Tersedia juga spot-spot foto yang menarik dan tempat duduk untuk bersantai menikmati pemandangan. Tempat ini sangat cocok dikunjungi bersama keluarga atau teman-teman."
             )
         )
 
-        wisataAdapter = ImageAdapter(wisataList)
-        wisataRecyclerView.adapter = wisataAdapter
-
-        wisataAdapter.onItemClick = { item ->
-            val intent = Intent(this, DetailActivity::class.java).apply {
-                putExtra("wisata", item)
-            }
+        wisataAdapter = ImageAdapter(wisataList) { item: WisataData ->
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("wisata", item as Serializable)
             startActivity(intent)
         }
+
+        wisataRecyclerView.adapter = wisataAdapter
     }
 }
+
 
